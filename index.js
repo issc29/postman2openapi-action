@@ -24,7 +24,7 @@ async function run() {
             });
             const dataFromBase64 = Buffer.from(content.data.content, 'base64').toString()
             console.log(dataFromBase64)
-            const openapi = transpile(dataFromBase64);
+            const openapi = transpile(JSON.parse(dataFromBase64));
             console.log(openapi)
         }
 
