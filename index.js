@@ -24,14 +24,20 @@ async function run() {
                 path: file.path
             });
             const filePath = specificFileContent.data.path
-            const sourceFileName = filePath.match(/postman\/collections\/(.*)\.json/)[0];
+            const sourceFileName = filePath.match(/postman\/collections\/(.*)\.json/)[1];
 
-            const targetFileContent = await octokit.rest.repos.getContent({
-                ...context.repo,
-                path: `postman/schemas/${sourceFileName}.yaml`
-            });
+            try {
+                const targetFileContent = await octokit.rest.repos.getContent({
+                    ...context.repo,
+                    path: `postman/schemas/${sourceFileName}.yaml`
+                });
+                console.log(targetFileContent)
+            }
+            catch(error) { 
+                console.log(error)
+            }
 
-            console.log(targetFileContent)
+            
             //const targetSHA = targetFileContent.sha
 
             
