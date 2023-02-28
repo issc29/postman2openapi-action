@@ -17,7 +17,15 @@ async function run() {
             path: 'postman/collections'
         });
 
-        console.log(content)
+        for (const file of content.data) {
+            const content = await octokit.rest.repos.getContent({
+                ...context.repo,
+                path: file.path
+            });
+            console.log(content)
+        }
+
+        
 
 
 
