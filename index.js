@@ -23,6 +23,8 @@ async function run() {
                 path: file.path
             });
             console.log(content)
+            const dataFromBase64 = Buffer.from(content.data.content, 'base64').toString()
+            console.log(dataFromBase64)
         }
 
         
