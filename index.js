@@ -31,33 +31,24 @@ async function run() {
                     ...context.repo,
                     path: `postman/schemas/${sourceFileName}.yaml`
                 });
-                console.log(targetFileContent)
+                //console.log(targetFileContent)
+                const targetSHA = targetFileContent.sha
+                writeYAML(specificFileContent.data.content, targetSHA)
+                
             }
             catch(error) { 
-                console.log(error)
+                writeYAML(specificFileContent.data.content)
             }
 
             
-            //const targetSHA = targetFileContent.sha
+            //
+
+
 
             
 
 
-            const dataFromBase64 = Buffer.from(specificFileContent.data.content, 'base64').toString()
-    
-            const openapi = transpile(JSON.parse(dataFromBase64));
-            const openapiyaml = yaml.dump(openapi)
-            let openapiBase64 = Buffer.from(openapiyaml).toString('base64');
-            octokit.rest.repos.createOrUpdateFileContents({
-                ...context.repo,
-                path: "postman/schemas/created.yaml",
-                message: "modify postman schema",
-                content: openapiBase64,
-                "committer.name": "action",
-                "committer.email": "action@action.com",
-                "author.name": "action",
-                "author.email": "action@action.com",
-                })
+            
         }
 
 
@@ -65,4 +56,26 @@ async function run() {
         console.log(error)
      core.setFailed(error.message);
     }
+}
+
+
+function writeYAML(data, sha){
+    const dataFromBase64 = Buffer.from(data, 'base64').toString()
+    
+    const openapi = transpile(JSON.parse(dataFromBase64));
+    const openapiyaml = yaml.dump(openapi)
+    let openapiBase64 = Buffer.from(openapiyaml).toString('base64');
+
+    var requestObj = {
+        ...context.repo,
+        path: "postman/schemas/created.yaml",
+        message: "modify postman schema",
+        content: openapiBase64,
+        "committer.name": "action",
+        "committer.email": "action@action.com",
+        "author.name": "action",
+        "author.email": "action@action.com",
+        }
+    (sha) ? (requestObj.sha = sha) : ''
+    octokit.rest.repos.createOrUpdateFileContents(requestObj)
 }
