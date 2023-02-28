@@ -4,19 +4,13 @@ This action prints "Hello World" or "Hello" + the name of a person to greet to t
 
 ## Inputs
 
-### `who-to-greet`
+### `myToken`
 
-**Required** The name of the person to greet. Default `"World"`.
-
-## Outputs
-
-### `time`
-
-The time we greeted you.
+**Required** The GitHub token to access the repo. {{ secrets.GITHUB_TOKEN }}
 
 ## Example usage
 
 ```yaml
-uses: actions/hello-world-javascript-action@v1.1
+uses: issc29/postman2openapi-action@main
 with:
-  who-to-greet: 'Mona the Octocat'
+  myToken: ${{ secrets.GITHUB_TOKEN }}
