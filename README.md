@@ -1,6 +1,6 @@
-# Hello world javascript action
+# Postman Collections to OpenAPI Spec Converter Action
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+This action converts a Postman Collection to OpenAPI Spec.  
 
 ## Inputs
 
