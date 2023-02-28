@@ -25,7 +25,7 @@ async function run() {
             const dataFromBase64 = Buffer.from(content.data.content, 'base64').toString()
             //console.log(dataFromBase64)
             const openapi = transpile(JSON.parse(dataFromBase64));
-            let openapiBase64 = Buffer.from(openapi).toString('base64');
+            let openapiBase64 = Buffer.from(JSON.stringify(openapi)).toString('base64');
             octokit.rest.repos.createOrUpdateFileContents({
                 ...context.repo,
                 path: "postman/schemas/created.yaml",
