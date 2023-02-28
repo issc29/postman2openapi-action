@@ -28,7 +28,7 @@ async function run() {
             let openapiBase64 = Buffer.from(openapi).toString('base64');
             octokit.rest.repos.createOrUpdateFileContents({
                 ...context.repo,
-                "postman/schemas/created.yaml",
+                path: "postman/schemas/created.yaml",
                 message: "modify postman schema",
                 content: openapiBase64,
                 "committer.name": "action",
