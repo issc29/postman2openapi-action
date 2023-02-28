@@ -1,6 +1,5 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const collection = require('./collection'); // any Postman collection JSON file
 const { transpile } = require('postman2openapi');
 
 
