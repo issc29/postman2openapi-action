@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const { transpile } = require('postman2openapi');
+const yaml = require('js-yaml');
 
 
 run();
@@ -25,7 +26,9 @@ async function run() {
             const dataFromBase64 = Buffer.from(content.data.content, 'base64').toString()
             //console.log(dataFromBase64)
             const openapi = transpile(JSON.parse(dataFromBase64));
-            let openapiBase64 = Buffer.from(JSON.stringify(openapi)).toString('base64');
+            const openapiyaml = yaml.dump(openapi)
+            console.log(openapiyaml)
+            let openapiBase64 = Buffer.from(openapiyaml).toString('base64');
             octokit.rest.repos.createOrUpdateFileContents({
                 ...context.repo,
                 path: "postman/schemas/created.yaml",
