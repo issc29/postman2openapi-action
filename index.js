@@ -31,12 +31,13 @@ async function run() {
                     ...context.repo,
                     path: `postman/schemas/${sourceFileName}.yaml`
                 });
-                //console.log(targetFileContent)
+                console.log("write yaml for existing file")
                 const targetSHA = targetFileContent.sha
                 writeYAML(specificFileContent.data.content, sourceFileName, targetSHA)
                 
             }
             catch(error) { 
+                console.log(error)
                 writeYAML(specificFileContent.data.content, sourceFileName)
             }
 
