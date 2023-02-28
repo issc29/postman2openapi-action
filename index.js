@@ -72,5 +72,6 @@ function writeYAML(data, filename, sha){
     if(sha != null) {
         requestObj.sha = sha
     }
+    console.log(`SHA:${sha}`)
     octokit.rest.repos.createOrUpdateFileContents(requestObj)
 }
