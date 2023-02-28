@@ -76,6 +76,8 @@ function writeYAML(data, sha){
         "author.name": "action",
         "author.email": "action@action.com",
         }
-    (sha) ? (requestObj.sha = sha) : ''
+    if(sha != null) {
+        requestObj.sha = sha
+    }
     octokit.rest.repos.createOrUpdateFileContents(requestObj)
 }
