@@ -33,20 +33,12 @@ async function run() {
                 });
                 //console.log(targetFileContent)
                 const targetSHA = targetFileContent.sha
-                writeYAML(specificFileContent.data.content, targetSHA)
+                writeYAML(specificFileContent.data.content, sourceFileName, targetSHA)
                 
             }
             catch(error) { 
-                writeYAML(specificFileContent.data.content)
+                writeYAML(specificFileContent.data.content, sourceFileName)
             }
-
-            
-            //
-
-
-
-            
-
 
             
         }
@@ -59,7 +51,7 @@ async function run() {
 }
 
 
-function writeYAML(data, sha){
+function writeYAML(data, filename, sha){
     const dataFromBase64 = Buffer.from(data, 'base64').toString()
     
     const openapi = transpile(JSON.parse(dataFromBase64));
@@ -68,7 +60,7 @@ function writeYAML(data, sha){
 
     var requestObj = {
         ...context.repo,
-        path: "postman/schemas/created.yaml",
+        path: `postman/schemas/${filename}.yaml`,
         message: "modify postman schema",
         content: openapiBase64,
         "committer.name": "action",
