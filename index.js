@@ -23,7 +23,7 @@ async function run() {
                 ...context.repo,
                 path: file.path
             });
-            const filePath = content.data.path
+            const filePath = specificFileContent.data.path
             const sourceFileName = filePath.match(/postman\/collections\/(.*)\.json/)[0];
 
             const targetFileContent = await octokit.rest.repos.getContent({
