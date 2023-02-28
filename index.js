@@ -2,6 +2,8 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const { transpile } = require('postman2openapi');
 const yaml = require('js-yaml');
+const context = github.context
+const octokit = github.getOctokit(myToken)
 
 
 run();
@@ -10,9 +12,6 @@ async function run() {
 
     try {
         const myToken = core.getInput('myToken');
-        const context = github.context
-        const octokit = github.getOctokit(myToken)
-
         const content = await octokit.rest.repos.getContent({
             ...context.repo,
             path: 'postman/collections'
