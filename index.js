@@ -19,15 +19,28 @@ async function run() {
         });
 
         for (const file of content.data) {
-            const content = await octokit.rest.repos.getContent({
+            const specificFileContent = await octokit.rest.repos.getContent({
                 ...context.repo,
                 path: file.path
             });
-            const dataFromBase64 = Buffer.from(content.data.content, 'base64').toString()
-            //console.log(dataFromBase64)
+            const filePath = content.data.path
+            const sourceFileName = filePath.match(/postman\/collections\/(.*)\.json/)[0];
+
+            const targetFileContent = await octokit.rest.repos.getContent({
+                ...context.repo,
+                path: `postman/schemas/${sourceFileName}.yaml`
+            });
+
+            console.log(targetFileContent)
+            //const targetSHA = targetFileContent.sha
+
+            
+
+
+            const dataFromBase64 = Buffer.from(specificFileContent.data.content, 'base64').toString()
+    
             const openapi = transpile(JSON.parse(dataFromBase64));
             const openapiyaml = yaml.dump(openapi)
-            console.log(openapiyaml)
             let openapiBase64 = Buffer.from(openapiyaml).toString('base64');
             octokit.rest.repos.createOrUpdateFileContents({
                 ...context.repo,
@@ -38,17 +51,8 @@ async function run() {
                 "committer.email": "action@action.com",
                 "author.name": "action",
                 "author.email": "action@action.com",
-                    })
+                })
         }
-
-        
-
-
-
-        // Returns a JavaScript object representation of the OpenAPI definition.
-        //const openapi = transpile(collection);
-
-        //console.log(JSON.stringify(openapi, null, 2));
 
 
     } catch (error) {
