@@ -32,7 +32,7 @@ async function run() {
                     path: `postman/schemas/${sourceFileName}.yaml`
                 });
                 console.log("write yaml for existing file")
-                const targetSHA = targetFileContent.sha
+                const targetSHA = targetFileContent.data.sha
                 writeYAML(specificFileContent.data.content, sourceFileName, targetSHA)
                 
             }
