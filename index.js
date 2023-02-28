@@ -22,8 +22,8 @@ async function run() {
                 ...context.repo,
                 path: file.path
             });
-            console.log(content)
             const dataFromBase64 = Buffer.from(content.data.content, 'base64').toString()
+            console.log(dataFromBase64)
             const openapi = transpile(dataFromBase64);
             console.log(openapi)
         }
@@ -39,6 +39,7 @@ async function run() {
 
 
     } catch (error) {
+        console.log(error)
      core.setFailed(error.message);
     }
 }
